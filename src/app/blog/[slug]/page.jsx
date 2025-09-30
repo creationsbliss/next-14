@@ -7,7 +7,7 @@ const SingleBlogPage = async ({ params }) => {
   const { slug } = await params;
   // console.log(slug);
   const post = await getPost(slug);
-  // console.log(post);
+  console.log(post.userId);
 
   return (
     <div className="flex flex-col gap-4">
@@ -29,7 +29,7 @@ const SingleBlogPage = async ({ params }) => {
         />
 
         <Suspense fallback={<p>Loading author...</p>}>
-          <BlogAuthor id={slug} />
+          <BlogAuthor id={post.userId} />
         </Suspense>
       </div>
       <p>{post.body}</p>
