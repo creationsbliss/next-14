@@ -1,6 +1,18 @@
 import Image from "next/image";
+import { Suspense } from "react";
+import BlogAuthor from "@/components/blog-post/BlogAuthor";
 
-const SingleBlogPage = () => {
+const getPost = async (slug) => {
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/posts/${slug}`
+  );
+  return await response.json();
+};
+
+const SingleBlogPage = async ({ params }) => {
+  const { slug } = await params;
+  const post = await getPost(slug);
+
   return (
     <div className="flex flex-col gap-4">
       <Image
@@ -9,7 +21,7 @@ const SingleBlogPage = () => {
         width={300}
         height={400}
       />
-      <h2 className="font-bold text-xl"> Blog Title</h2>
+      <h2 className="font-bold text-xl"> {post.title} </h2>
       <div className="flex gap-4 items-center">
         <Image
           src="/noavatar.png"
@@ -18,17 +30,12 @@ const SingleBlogPage = () => {
           height={50}
           className="rounded-full"
         />
-        <div>
-          <h2>Author: Author name </h2>
-          <h2>Published: 29.11.2026 </h2>
-        </div>
+
+        <Suspense fallback={<p>Loading author...</p>}>
+          <BlogAuthor id={slug} />
+        </Suspense>
       </div>
-      <p>
-        Nostra felis fermentum dignissim dictum consectetuer turpis sed
-        imperdiet parturient montes aenean mattis lacinia blandit eget bibendum
-        senectus ultricies tincidunt pharetra amet congue facilisi phasellus
-        netus ante enim conubia at elit ad accumsan quam ex{" "}
-      </p>
+      <p>{post.body}</p>
     </div>
   );
 };
