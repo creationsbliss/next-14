@@ -1,27 +1,24 @@
 import Image from "next/image";
 import { Suspense } from "react";
 import BlogAuthor from "@/components/blog-post/BlogAuthor";
-
-const getPost = async (slug) => {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${slug}`
-  );
-  return await response.json();
-};
+import { getPost } from "@/lib/data";
 
 const SingleBlogPage = async ({ params }) => {
   const { slug } = await params;
+  // console.log(slug);
   const post = await getPost(slug);
+  // console.log(post);
 
   return (
     <div className="flex flex-col gap-4">
       <Image
-        src="https://images.pexels.com/photos/1181346/pexels-photo-1181346.jpeg"
+        src={post.image || "/noavatar.png"}
         alt="blog image"
         width={300}
         height={400}
       />
       <h2 className="font-bold text-xl"> {post.title} </h2>
+      <p>{post.description}</p>
       <div className="flex gap-4 items-center">
         <Image
           src="/noavatar.png"

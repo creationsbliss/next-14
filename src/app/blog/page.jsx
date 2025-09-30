@@ -1,12 +1,10 @@
 import BlogPost from "@/components/blog-post/BlogPost";
-
-const getPosts = async () => {
-  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-  return await response.json();
-};
+import { getPosts } from "@/lib/data";
 
 const BlogPage = async () => {
   const posts = await getPosts();
+
+  // console.log("posts: ", posts);
 
   return (
     <div className="flex flex-col gap-10 mt-10">
