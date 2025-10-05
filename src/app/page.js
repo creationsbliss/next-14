@@ -18,7 +18,7 @@ export default function Home() {
         <Image src="/brands.png" alt="brand image" width={400} height={250} />
       </div>
       <div className="relative flex-1">
-        <Image src="/hero.gif" alt="hero image" fill />
+        <Image src="/hero.gif" alt="hero image" unoptimized fill />
       </div>
     </div>
   );
